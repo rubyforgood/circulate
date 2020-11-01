@@ -13,6 +13,19 @@ services:
       - config/docker.env
     stdin_open: true
     tty: true
+    depends_on:
+      - database
+
+  assets:
+    build: .
+    command: bin/webpack-dev-server
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - config/docker.env
+    stdin_open: true
+    tty: true
 
   database:
     image: postgres:12.4
