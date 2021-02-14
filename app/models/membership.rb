@@ -3,6 +3,8 @@ class Membership < ApplicationRecord
 
   belongs_to :member
   has_one :adjustment, as: "adjustable"
+  acts_as_tenant :library
+  validates_uniqueness_to_tenant :member_id
 
   scope :active, -> { where("started_at <= ? AND ended_at >= ?", Time.current, Time.current) }
   scope :pending, -> { where(started_at: nil, ended_at: nil) }
@@ -59,9 +61,9 @@ class Membership < ApplicationRecord
       start_date = next_start_date_for_member(member, now: now)
       raise PendingMembership.new("member with pending membership can't start a new membership") unless start_date
 
-      membership = member.memberships.create!(started_at: start_date, ended_at: start_date + 364.days)
+      membership = member.memberships.create!(started_at: start_date, ended_at: start_date + 364.days, library: member.library)
     else
-      membership = member.memberships.create!
+      membership = member.memberships.create!(library: member.library)
     end
 
     if amount > 0

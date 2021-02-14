@@ -14,6 +14,14 @@ module ApplicationHelper
     tag.div(**attrs, &block)
   end
 
+  def logo(library: current_library, small: false, classes: "")
+    if library.image.attached?
+      image_tag url_for(library.image.variant(resize_to_limit: [100, 89])), class: classes
+    else
+      image_pack_tag "logo#{small ? '_small' : nil}.png", class: classes
+    end
+  end
+  
   def navbar_link_to(text, link, version = "")
     if version == "mobile"
       tag.span(class: "navbar-brand  mr-2 ml-2") do

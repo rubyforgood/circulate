@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   scope :upcoming, -> { where("start > ?", Time.current) }
 
+  acts_as_tenant :library
   scope :appointment_slots, -> {
     upcoming.where(calendar_id: appointment_slot_calendar_id).order("start ASC")
   }

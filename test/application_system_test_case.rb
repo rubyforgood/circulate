@@ -60,12 +60,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: driver, screen_size: [1400, 1800]
 
   setup do
+    ActsAsTenant.test_tenant = libraries(:chicago_tool_library)
+
     if ENV["DOCKER"]
       Capybara.javascript_driver = ENV["HEADLESS"] == "true" ? :headless_chrome_in_container : :chrome_in_container
       Capybara.current_driver = Capybara.javascript_driver
       Capybara.server_host = "0.0.0.0"
       Capybara.server_port = 4000
       Capybara.app_host = "http://example.com:4000"
+
+      ActsAsTenant.test_tenant = libraries(:system_test_library)
     end
   end
 
@@ -79,6 +83,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   teardown do
+    ActsAsTenant.test_tenant = nil
+
     errors = page.driver.browser.manage.logs.get(:browser)
     fail = false
     if errors.present?

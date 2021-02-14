@@ -33,7 +33,7 @@
           <%# Surrounding div used to create navbar with primary-color %>
           <div class="show-sm mobile-nav">
             <a href="https://chicagotoollibrary.org/">
-              <%= image_pack_tag "logo_small.png" %>
+              <%= logo(small: true) %>
             </a>
           </div>
 
@@ -41,7 +41,7 @@
           <div id="sidebar-id" class="off-canvas-sidebar" data-target="sidebar.menu">
             <div class="sidebar-list">
               <a href="https://chicagotoollibrary.org/">
-                <%= image_pack_tag "logo_small.png" %>
+                <%= logo(small: true) %>
               </a>
               <ul class="nav">
                   <%= form_with url: search_path, method: :get, class: "mr-2 search-box", local: true do |form| %>
@@ -54,7 +54,7 @@
                   <% end %>
                 <span class="nav-category">Site Links</span>
                 <ul class="nav">
-                  <%=render partial: 'shared/navbar_links' %>
+                  <%= render partial: 'shared/navbar_links' %>
                 </ul>
 
                 <%# Member Links -- Displayed if User is Signed in %>
@@ -87,7 +87,7 @@
               <section class="navbar-section">
                 <span class="navbar-brand mr-2">
                   <a href="https://chicagotoollibrary.org/">
-                  <%= image_pack_tag "logo_small.png" %>
+                    <%= logo(small: true) %
                   </a>
                 </span>
                 <%= form_with url: search_path, method: :get, class: "mr-2", local: true do |form| %>

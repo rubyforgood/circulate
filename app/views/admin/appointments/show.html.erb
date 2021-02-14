@@ -1,5 +1,6 @@
 <% content_for :header do %>
   <%= index_header "#{preferred_or_default_name(current_appointment.member)}'s Appointment" %>
+
 <% end %>
 
 <%= render partial: "admin/members/membership_status", locals: { member: current_appointment.member } %>
